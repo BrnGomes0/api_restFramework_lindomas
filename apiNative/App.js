@@ -16,10 +16,26 @@ export default function App() {
       console.log(res.data.name)
       setUsuario(res.data.name)
       setCidade(res.data.city)
+    }).catch((erro)=> {
+      console.log(erro.response.status)
     })
   }
-
-
+  const adicionar = () => {
+    axios.post('http://127.0.0.1:8000/api/users',
+    {
+      name: userAdd,
+      city: cityAdd
+    }
+    ).then((res)=> {
+      console.log(res.data.id)
+      console.log(res.data.name)
+      console.log(res.data.city)
+      setUserAdd('')
+      setCityAdd('')
+    }).catch((erro)=> {
+      console.log(erro.response.status)
+    })
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.texto2}>ID:</Text>
@@ -43,18 +59,20 @@ export default function App() {
       <TextInput
         style={styles.addNew}
         onChangeText={(e) => setUserAdd(e)}
+        value={userAdd}
       />
       <Text style={styles.texto2}>Cidade:</Text>
       <TextInput
         style={styles.addNew}
         onChangeText={(e) => setCityAdd(e)}
+        value={cityAdd}
       />
 
       <View style={styles.btn}>
         <Button
           title='POST'
           color='blue'
-          //onPress={adicionar}
+          onPress={adicionar}
         />
       </View>
     </View>
